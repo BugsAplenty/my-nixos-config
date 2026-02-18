@@ -1,0 +1,6 @@
+{ config, pkgs, lib, inputs, ... }:
+{
+  programs.nixvim.plugins.web-devicons = {
+    enable = true;
+  };
+}
