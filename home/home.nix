@@ -63,22 +63,24 @@
         theme = "kyli0x";
       };
     };
-    aichat = {
-      enable = true;
-      settings = {
-      	model = "gemma3:4b";
-        clients = [{
-          type = "ollama";  # Not "openai-compatible"
-          name = "ollama";
-          api_base = "http://localhost:11434";  # No /v1 suffix
-	  models = [
-	    { name = "gemma3:4b"; max_tokens = 8192; }
-	  ];
-        }];
+    # aichat = {
+    #   enable = true;
+    #   settings = {
+    #   	model = "gemma3:4b";
+    #     clients = [{
+    #       type = "ollama";  # Not "openai-compatible"
+    #       name = "ollama";
+    #       api_base = "http://localhost:11434";  # No /v1 suffix
+	  # models = [
+	  #   { 
+    #     name = "gemma3:4b"; max_tokens = 8192;
+    #   }
+	  # ];
+    #     }];
         
-        default_client = "ollama";
-      };
-    };
+    #     default_client = "ollama";
+    #   };
+    # };
   };
 
   services = {

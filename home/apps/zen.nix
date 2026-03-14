@@ -15,13 +15,22 @@
       DisablePocket = true;
       
       # 64GB RAM TWEAKS (Injected via Policies -> Preferences)
+            # 64GB RAM TWEAKS (Injected via Policies -> Preferences)
       Preferences = {
         # CACHE: RAM ONLY
         "browser.cache.disk.enable" = false;
         "browser.cache.memory.enable" = true;
         "browser.cache.memory.capacity" = 4194304; # 4GB
-        "browser.sessionhistory.max_total_viewers" = 16;
-        "browser.tabs.unloadOnLowMemory" = false;
+
+        # FIX 1: Reduce bfcache limit to prevent background thread hoarding
+        "browser.sessionhistory.max_total_viewers" = 4; 
+
+        # FIX 2: Re-enable tab unloading to kill idle threads
+        "browser.tabs.unloadOnLowMemory" = true;
+
+        # FIX 3: Hard-cap the number of content processes
+        "dom.ipc.processCount" = 8; 
+        "dom.ipc.processCount.webIsolated" = 8;
 
         # GRAPHICS
         "media.ffmpeg.vaapi.enabled" = true;
@@ -44,6 +53,7 @@
           install_url = "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
           installation_mode = "force_installed";
         };
+
       };
     };
     

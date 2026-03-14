@@ -1,53 +1,58 @@
 { pkgs, ... }:
 
+let
+  continuePatched = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+    mktplcRef = {
+      name = "continue";
+      publisher = "Continue";
+      version = "1.1.40";
+      sha256 = "sha256-P4rhoj4Juag7cfB9Ca8eRmHRA10Rb4f7y5bNGgVZt+E=";
+      arch = "linux-x64";
+    };
+    nativeBuildInputs = [ pkgs.autoPatchelfHook ];
+    buildInputs = [ pkgs.stdenv.cc.cc.lib ];
+  };
+in
 {
   programs.vscode = {
-    enable  = true;
+    enable = true;
     package = pkgs.vscodium;
-    mutableExtensionsDir = true;   # Catppuccin writes a generated JSON
+    mutableExtensionsDir = false;
 
     profiles.default = {
       userSettings = {
         # ── theming ──────────────────────────────────
         "workbench.colorTheme" = "Catppuccin Mocha";
-        "workbench.iconTheme"  = "catppuccin-mocha";
+        "workbench.iconTheme" = "catppuccin-mocha";
 
         # ── fonts ────────────────────────────────────
         "editor.fontFamily" = "BigBlueTermPlus Nerd Font Mono";
-        "editor.fontSize"   = 16;
+        "editor.fontSize" = 16;
         "editor.fontLigatures" = true;
         "terminal.integrated.fontFamily" = "BigBlueTermPlus Nerd Font Mono";
-        "terminal.integrated.fontSize"   = 16;
+        "terminal.integrated.fontSize" = 16;
 
         # ── QoL tweaks ───────────────────────────────
-        "files.autoSave"                      = "afterDelay";
-        "files.autoSaveDelay"                 = 1000;
+        "files.autoSave" = "afterDelay";
+        "files.autoSaveDelay" = 1000;
         "terminal.integrated.copyOnSelection" = true;
         "terminal.integrated.sendKeyBindingsToShell" = true;
         "editor.clipboard.copyWithSyntaxHighlighting" = true;
 
         # ── Jupyter / notebooks ──────────────────────
-        # Keep notebook roots predictable
         "jupyter.notebookFileRoot" = "\${workspaceFolder}";
-        # One interactive window per file (less clutter)
         "jupyter.interactiveWindowMode" = "perFile";
-        # Avoid tiny clipped outputs
         "notebook.output.textLineLimit" = 10000;
-        # Don’t nag for restarts on small kernel changes
         "jupyter.askForKernelRestart" = false;
-        # Prefer built-in renderers (works well with Plotly + renderers ext)
         "notebook.experimental.outputScrolling" = true;
-        # Make it obvious which env your kernel comes from
         "jupyter.enableKernelPickerInInteractiveWindow" = true;
 
         # ── Python ───────────────────────────────────
         "python.analysis.typeCheckingMode" = "basic";
-        # Harmless if you launch via `nix develop -c codium .`
         "python.defaultInterpreterPath" = "\${workspaceFolder}/.venv/bin/python";
       };
 
       extensions = with pkgs.vscode-extensions; [
-        # original toolchain
         ms-vscode.cmake-tools
         ms-vscode.cpptools
         ms-python.python
@@ -55,16 +60,14 @@
         ms-vscode-remote.remote-ssh
         jnoortheen.nix-ide
         ms-toolsai.datawrangler
-
-        # new themes & icons
         catppuccin.catppuccin-vsc
         catppuccin.catppuccin-vsc-icons
-
-        # extra open-source goodies
         streetsidesoftware.code-spell-checker
         redhat.vscode-yaml
         rust-lang.rust-analyzer
         platformio.platformio-vscode-ide
+      ] ++ [
+        continuePatched
       ];
     };
   };
