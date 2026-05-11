@@ -3,7 +3,6 @@
 
 {
   home = {
-    
     shell = {
       enableFishIntegration = true;
     };
@@ -96,7 +95,6 @@
     };
     ollama = {
       enable = true;
-      acceleration = "cuda";
     };
     poweralertd = {
       enable = true;

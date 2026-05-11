@@ -61,6 +61,14 @@ in
       "he_IL.UTF-8/UTF-8"
       "ru_RU.UTF-8/UTF-8"
     ];
+    inputMethod = {
+      enable = true;
+      type = "fcitx5";
+      fcitx5.addons = with pkgs; [
+        fcitx5-gtk
+        kdePackages.fcitx5-qt
+      ];
+    };
   };
 
   console.keyMap = "us";
@@ -92,9 +100,6 @@ in
       allowedUDPPorts = [ 12345 12346 8888 8889 ];
     };
     hostName = "nixos";
-    wireless = {
-      enable = false;
-    };
     networkmanager = {
       enable = true;
     };
@@ -245,7 +250,6 @@ in
     };
     
     # Misc services
-    expressvpn.enable = true;
     fwupd.enable      = true;
     printing.enable   = true;
   };
@@ -271,7 +275,7 @@ in
     wget 
     tree 
     unzip 
-    neofetch 
+    fastfetch
     wl-clipboard 
     gdb 
     busybox 
@@ -283,7 +287,7 @@ in
     gcc 
     tcpdump
     winetricks
-    wineWowPackages.stable
+    wineWow64Packages.stable
     xournalpp
     xclip
     platformio
@@ -309,9 +313,9 @@ in
     nordic 
     discord
     inxi
-    expressvpn
     gtt 
     w3m
+    expressvpn
     orca-slicer
     kubectl 
     kubernetes-helm 
@@ -324,7 +328,6 @@ in
     pciutils
     usbutils
     openmw 
-    portmod 
     speedtest 
     baobab 
     unrar
@@ -333,14 +336,12 @@ in
     parted
     alsa-utils 
     alsa-tools 
-    helvum 
     qpwgraph 
     pulseaudioFull 
     dig 
     helmfile
     patchelf
     zenity
-    local-ai
     esptool
     esphome
     qbittorrent
@@ -379,7 +380,7 @@ in
         material-design-icons
         culmus
         noto-fonts
-        noto-fonts-emoji
+        noto-fonts-color-emoji
       ];
   };
 }

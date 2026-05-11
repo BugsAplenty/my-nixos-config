@@ -8,6 +8,7 @@
     kdePackages.gwenview
     kdePackages.dolphin-plugins
     kdePackages.ark
+    kdePackages.audiocd-kio
     
     # Theming Tools
     kdePackages.breeze-gtk
@@ -16,6 +17,7 @@
     # Icons & Cursors (Reusing your favorites)
     papirus-icon-theme
     bibata-cursors
+    skrooge
   ];
 
   programs = {
