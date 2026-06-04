@@ -14,9 +14,8 @@ let
   };
 in
 {
-  programs.vscode = {
+  programs.vscodium = {
     enable = true;
-    package = pkgs.vscodium;
     mutableExtensionsDir = false;
 
     profiles.default = {

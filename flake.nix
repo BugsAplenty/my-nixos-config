@@ -2,12 +2,10 @@
   description = "My Unified NixOS + Home Manager Configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-
-    nixpkgs-expressvpn-pr.url = "github:NixOS/nixpkgs/pull/392292/head";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -27,18 +25,9 @@
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-expressvpn-pr, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
-
-      expressvpnPrPkgs = import nixpkgs-expressvpn-pr {
-        inherit system;
-        config.allowUnfree = true;
-      };
-
-      expressvpnOverlay = final: prev: {
-        expressvpn = expressvpnPrPkgs.expressvpn;
-      };
     in
     {
       nixosConfigurations = {
@@ -55,10 +44,15 @@
               nixpkgs.overlays = [
                 inputs.vscode-ext.overlays.default
                 (import ./overlays/helm-with-plugins.nix)
-                expressvpnOverlay
               ];
 
-              nixpkgs.config.allowUnfree = true;
+              nixpkgs = {
+                config = {
+                  allowUnfree = true;
+                  cudaSupport = true;
+                  cudaCapabilities = [ "8.6" ];
+                };
+              }; 
 
               home-manager = {
                 useGlobalPkgs = true;
@@ -79,7 +73,6 @@
             inherit system;
             overlays = [
               inputs.vscode-ext.overlays.default
-              expressvpnOverlay
             ];
             config.allowUnfree = true;
           };

@@ -47,7 +47,7 @@
       userName = "BugsAplenty";
       userEmail = "28706245+BugsAplenty@users.noreply.github.com";
       signing = {
-        key = "49211D602521B4C3";
+        key = "FE18A7128BA2E1D9";
         signByDefault = true;
       };
     };

@@ -2,7 +2,7 @@
 
 {
   imports = [
-    inputs.nixvim.homeManagerModules.nixvim
+    inputs.nixvim.homeModules.nixvim
     ./plugins/lualine.nix
     ./plugins/web-devicons.nix
     ./plugins/treesitter.nix
@@ -18,7 +18,6 @@
     ./plugins/cmp.nix
     ./plugins/luasnip.nix
     ./plugins/which-key.nix
-    ./plugins/barbar.nix
     ./plugins/toggleterm.nix
     ./plugins/codecompanion.nix
   ];

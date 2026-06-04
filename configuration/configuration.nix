@@ -13,7 +13,7 @@ in
   imports = [
     /etc/nixos/hardware-configuration.nix
   ];
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
@@ -111,10 +111,10 @@ in
     pam = {
       services = {
         login = {
-	  kwallet = {
-	    enable = true;
-	  };
-	};
+          kwallet = {
+            enable = true;
+          };
+        };
       };
     };
   };
@@ -167,6 +167,9 @@ in
   };
 
   services = {
+    expressvpn = {
+      enable = true;
+    };
     searx = {
       enable = true;
       package = pkgs.searxng;
