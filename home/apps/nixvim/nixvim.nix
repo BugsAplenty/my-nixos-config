@@ -20,6 +20,7 @@
     ./plugins/which-key.nix
     ./plugins/toggleterm.nix
     ./plugins/codecompanion.nix
+    ./plugins/guess-indent.nix
   ];
   programs.nixvim = {
     enable = true;

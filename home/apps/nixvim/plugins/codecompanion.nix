@@ -2,51 +2,54 @@
 
 {
   programs.nixvim = {
-    # Enable the plugin but don't use settings
-    plugins.codecompanion.enable = true;
-    
-    # Configure it with Lua directly
-    extraConfigLua = ''
-      require("codecompanion").setup({
-        strategies = {
-          chat = {
-            adapter = "ollama",
-          },
-          inline = {
-            adapter = "ollama",
-          },
-          agent = {
-            adapter = "ollama",
-          },
-        },
+    plugins.codecompanion = {
+      enable = true;
+      settings = {
         adapters = {
-          ollama = function()
-            return require("codecompanion.adapters").extend("ollama", {
-              schema = {
-                model = {
-                  default = "qwen2.5-coder:7b",
+          ollama = ''
+            function()
+              return require("codecompanion.adapters").use("ollama", {
+                env = {
+                  url = "http://192.168.42.163:3000/v1",
                 },
-              },
-            })
-          end,
-        },
-      })
-    '';
-    
+                schema = {
+                  model = {
+                    default = "qwen3.6:35b",
+                  },
+                  num_ctx = {
+                    default = 16384,
+                  },
+                  keep_alive = {
+                    default = "10m",
+                  },
+                },
+              })
+            end
+          '';
+        };
+
+        strategies = {
+          chat.adapter = "ollama";
+          inline.adapter = "ollama";
+          cmd.adapter = "ollama";
+        };
+      };
+    };
+
     keymaps = [
       {
         mode = "n";
         key = "<leader>ac";
-        action = "<cmd>CodeCompanionChat<cr>";
+        action = "<cmd>CodeCompanionChat<CR>";
         options = {
-          desc = "Open AI Chat";
+          desc = "Open AI chat";
           silent = true;
         };
       }
       {
         mode = "v";
         key = "<leader>ac";
-        action = "<cmd>CodeCompanionChat Add<cr>";
+        action = "<cmd>CodeCompanionChat Add<CR>";
         options = {
           desc = "Add selection to chat";
           silent = true;
@@ -55,9 +58,18 @@
       {
         mode = [ "n" "v" ];
         key = "<leader>aa";
-        action = "<cmd>CodeCompanionActions<cr>";
+        action = "<cmd>CodeCompanionActions<CR>";
         options = {
-          desc = "AI Actions";
+          desc = "AI actions";
+          silent = true;
+        };
+      }
+      {
+        mode = [ "n" "v" ];
+        key = "<leader>ai";
+        action = "<cmd>CodeCompanion<CR>";
+        options = {
+          desc = "Inline AI";
           silent = true;
         };
       }

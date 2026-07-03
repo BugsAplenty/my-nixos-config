@@ -28,19 +28,6 @@ in
       };
       nixd = {
         enable = true;
-        settings = {
-          nixpkgs = {
-            expr = "import <nixpkgs> {}";
-          };
-          options = {
-            nixos = {
-              expr = "(builtins.getFlake \"${flakePath}\").nixosConfigurations.myhostname.options";
-            };
-            home-manager = {
-              expr = "(builtins.getFlake \"${flakePath}\").homeConfigurations.razboy.options";
-            };
-          };
-        };
       };
     };
   };

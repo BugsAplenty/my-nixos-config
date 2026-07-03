@@ -1,18 +1,5 @@
 { pkgs, ... }:
 
-let
-  continuePatched = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
-    mktplcRef = {
-      name = "continue";
-      publisher = "Continue";
-      version = "1.1.40";
-      sha256 = "sha256-P4rhoj4Juag7cfB9Ca8eRmHRA10Rb4f7y5bNGgVZt+E=";
-      arch = "linux-x64";
-    };
-    nativeBuildInputs = [ pkgs.autoPatchelfHook ];
-    buildInputs = [ pkgs.stdenv.cc.cc.lib ];
-  };
-in
 {
   programs.vscodium = {
     enable = true;
@@ -59,14 +46,14 @@ in
         ms-vscode-remote.remote-ssh
         jnoortheen.nix-ide
         ms-toolsai.datawrangler
+        ms-toolsai.jupyter  # ← ADD THIS LINE
         catppuccin.catppuccin-vsc
         catppuccin.catppuccin-vsc-icons
         streetsidesoftware.code-spell-checker
         redhat.vscode-yaml
         rust-lang.rust-analyzer
         platformio.platformio-vscode-ide
-      ] ++ [
-        continuePatched
+        continue.continue
       ];
     };
   };

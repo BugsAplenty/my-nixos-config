@@ -129,6 +129,9 @@ in
     graphics = {
       enable = true;
     };
+    bluetooth = {
+      enable = true;
+    };
     nvidia = {
       modesetting.enable = true;
       open = true;
@@ -169,31 +172,6 @@ in
   services = {
     expressvpn = {
       enable = true;
-    };
-    searx = {
-      enable = true;
-      package = pkgs.searxng;
-      redisCreateLocally = true;
-      environmentFile = "/etc/searxng.env"; # create with: SEARXNG_SECRET=$(openssl rand -hex 32)
-      settings = {
-        server = {
-          bind_address = "127.0.0.1";
-          port = 8888;
-        };
-        search.formats = [ "html" "json" ];
-      };
-    };
-    open-webui = {
-      enable = true;
-      host = "127.0.0.1";
-      port = 6969;
-      environment = {
-        OLLAMA_API_BASE_URL = "http://127.0.0.1:11434";
-        WEBUI_AUTH = "False"; # set to "True" if you want a login
-        ENABLE_RAG_WEB_SEARCH = "True";
-        RAG_WEB_SEARCH_ENGINE = "searxng";
-        SEARXNG_QUERY_URL = "http://127.0.0.1:8888/search?q=<query>&format=json";
-      };
     };
     asusd = {
       enable = true;
@@ -268,6 +246,7 @@ in
   };
   
   environment.systemPackages = with pkgs; [
+    speedtest-go
     minicom
     blender
     audacity
@@ -297,12 +276,12 @@ in
     llvmPackages.clang 
     llvmPackages.clang-tools 
     lldb
-    heroic
+    # heroic
     zig 
     cmake 
     ninja 
     nodejs 
-    python3 
+    python3
     poetry
     # multimedia & misc
     bitwig-studio5-unwrapped 
