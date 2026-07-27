@@ -16,7 +16,7 @@
     ];
     username = "razboy";
     homeDirectory = "/home/razboy";
-    stateVersion = "25.11";
+    stateVersion = "26.05";
     sessionVariables = {
       XCURSOR_THEME = "Bibata-Modern-Ice";
       XCURSOR_SIZE = "24";
